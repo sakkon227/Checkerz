@@ -27,6 +27,18 @@ public class Board{
 		}
 
 	}
+	
+	public boolean isAvailable(int row, int col){
+		if(row >= top.length() || col >= top[0].length() || row < 0 || col < 0){
+			return False;
+		}else if(top[row][col] == null && bottom[row][col] == null){
+			return True;
+		}else{
+			return False;
+		}
+	}
+	
+	
 
 
 
