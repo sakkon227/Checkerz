@@ -23,4 +23,27 @@ public class Piece{
 		return symbol;
 	}
 
+	public boolean getUpgraded(){
+		return isUpgraded;
+	}
+
+	public void upgrade(){
+		isUpgraded = true;
+	}
+
+	public void moveUp(){
+		row--;
+	}
+
+	public void moveDown(){
+		row++;
+	}
+
+	public void moveRight(){
+		col++;
+	}
+
+	public void moveLeft(){
+		col--;
+	}
 }
