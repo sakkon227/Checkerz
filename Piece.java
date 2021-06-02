@@ -29,6 +29,7 @@ public class Piece{
 
 	public void upgrade(){
 		isUpgraded = true;
+		symbol = symbol.toUpperCase();
 	}
 
 	public void moveUp(){
