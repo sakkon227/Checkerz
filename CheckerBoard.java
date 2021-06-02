@@ -103,7 +103,7 @@ public class CheckerBoard{
 
 	public void moveUpRight(int col, int row){  // 1,3 
 		row = size - row;    // 5
-		col--;                // 0   just referencing the actual point 
+		col--;                // 0   just referencing the actual point in 2D array
 		if (isOutOfRange(col + 1, row - 1)) {
 			System.out.println("The value is out of range!");
 			 
