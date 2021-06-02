@@ -74,6 +74,19 @@ public class CheckerBoard{
 		return result;
 	}
 
+	public Piece getPiece(int col, int row){
+		row = size - row;    
+		col--;  
+		Piece a = null;
+		for(Piece x : allPieces){
+			if(col == x.getCol() && row == x.getRow()){
+				a = x;
+				break;
+			}
+		}
+		return a;
+	}
+
 	public boolean isEmpty(int col, int row) {
 			if (board[row][col] == null) {
 				return true; 
@@ -92,6 +105,27 @@ public class CheckerBoard{
 		}
 	}
 
+	public boolean isMoveAllowed(boolean P, int col, int row){
+		row = size - row;    
+		col--;  
+		Piece a = null;
+		for(Piece x : allPieces){
+			if(col == x.getCol() && row == x.getRow()){
+				a = x;
+				break;
+			}
+		}
+		if (P && a.getSymbol().toLowerCase().equals("b")){
+			System.out.println("allowed");
+			return true;
+		} else if (!P && a.getSymbol().toLowerCase().equals("r")){
+			return true;
+		} else {
+			System.out.println("Pick a valid piece.");
+			return false;
+		}
+	}
+
 	public boolean isYourOwn(int initialCol, int initialRow, int col, int row) {
 		if (board[row][col] == board[initialRow][initialCol]) {
 			return true;
@@ -104,6 +138,13 @@ public class CheckerBoard{
 	public void moveUpRight(int col, int row){  // 1,3 
 		row = size - row;    // 5
 		col--;                // 0   just referencing the actual point in 2D array
+		Piece a = null;
+		for(Piece x : allPieces){
+			if(col == x.getCol() && row == x.getRow()){
+				a = x;
+				break;
+			}
+		}
 		if (isOutOfRange(col + 1, row - 1)) {
 			System.out.println("The value is out of range!");
 			 
@@ -111,13 +152,21 @@ public class CheckerBoard{
 			System.out.println("You can't move on top of your own piece!");
 			 
 		}else if (isEmpty(col + 1, row - 1)) {
+			a.moveUp();
+			a.moveRight();
+		} else if(!isOutOfRange(col + 2, row - 2) && isEmpty(col + 2, row - 2)){
+			a.moveUp();
+			a.moveUp();
+			a.moveRight();
+			a.moveRight();
 			for(Piece x : allPieces){
-				if(col == x.getCol() && row == x.getRow()){
-					x.moveUp();
-					x.moveRight();
+				if(col + 1 == x.getCol() && row - 1 == x.getRow()){
+					allPieces.remove(x);
 					break;
 				}
 			}
+		} else{
+			System.out.println("This is not a valid move.");
 		}
 	}
 
@@ -126,6 +175,13 @@ public class CheckerBoard{
 	public void moveUpLeft(int col, int row){
 		row = size - row;
 		col--;
+		Piece a = null;
+		for(Piece x : allPieces){
+			if(col == x.getCol() && row == x.getRow()){
+				a = x;
+				break;
+			}
+		}
 		if (isOutOfRange(col - 1, row - 1)) {
 			System.out.println("The value is out of range!");
 			 
@@ -133,39 +189,69 @@ public class CheckerBoard{
 			System.out.println("You can't move on top of your own piece!");
 			 
 		}else if (isEmpty(col - 1, row - 1)) {
+			a.moveUp();
+			a.moveLeft();
+		} else if(!isOutOfRange(col - 2, row - 2) && isEmpty(col - 2, row - 2)){
+			a.moveUp();
+			a.moveUp();
+			a.moveLeft();
+			a.moveLeft();
 			for(Piece x : allPieces){
-				if(col == x.getCol() && row == x.getRow()){
-					x.moveUp();
-					x.moveLeft();
+				if(col - 1 == x.getCol() && row - 1 == x.getRow()){
+					allPieces.remove(x);
 					break;
 				}
 			}
+		} else{
+			System.out.println("This is not a valid move.");
 		}
 	}
 
-	public void moveDownleft(int col, int row){
+	public void moveDownLeft(int col, int row){
 		row = size - row;
 		col--;
+		Piece a = null;
+		for(Piece x : allPieces){
+			if(col == x.getCol() && row == x.getRow()){
+				a = x;
+				break;
+			}
+		}
 		if (isOutOfRange(col - 1, row + 1)) {
 			System.out.println("The value is out of range!");
 			
 		}else if (isYourOwn(col, row, col - 1, row + 1)) {
 			System.out.println("You can't move on top of your own piece!");
 			
-		}else if (isEmpty(col - 1,row + 1)) {
+		}else if (isEmpty(col - 1, row + 1)) {
+			a.moveDown();
+			a.moveLeft();
+		} else if(!isOutOfRange(col - 2, row + 2) && isEmpty(col - 2, row + 2)){
+			a.moveDown();
+			a.moveDown();
+			a.moveLeft();
+			a.moveLeft();
 			for(Piece x : allPieces){
-				if(col == x.getCol() && row == x.getRow()){
-					x.moveDown();
-					x.moveLeft();
+				if(col - 1 == x.getCol() && row + 1 == x.getRow()){
+					allPieces.remove(x);
 					break;
 				}
 			}
+		} else{
+			System.out.println("This is not a valid move.");
 		}
 	}
 
 	public void moveDownRight(int col, int row){
 		row = size - row;
 		col--;
+		Piece a = null;
+		for(Piece x : allPieces){
+			if(col == x.getCol() && row == x.getRow()){
+				a = x;
+				break;
+			}
+		}
 		if (isOutOfRange(col + 1, row + 1)) {
 			System.out.println("The value is out of range!");
 			
@@ -173,13 +259,21 @@ public class CheckerBoard{
 			System.out.println("You can't move on top of your own piece!");
 			
 		}else if (isEmpty(col + 1, row + 1)) {
+			a.moveDown();
+			a.moveRight();
+		} else if(!isOutOfRange(col + 2, row + 2) && isEmpty(col + 2, row + 2)){
+			a.moveDown();
+			a.moveDown();
+			a.moveRight();
+			a.moveRight();
 			for(Piece x : allPieces){
-				if(col == x.getCol() && row == x.getRow()){
-					x.moveDown();
-					x.moveRight();
+				if(col + 1 == x.getCol() && row + 1 == x.getRow()){
+					allPieces.remove(x);
 					break;
 				}
 			}
+		} else{
+			System.out.println("This is not a valid move.");
 		}
 	}
 	
