@@ -86,6 +86,14 @@ public class CheckerBoard{
 		}
 		return a;
 	}
+	
+	public void promote(){
+		for(Piece x: allPieces){
+			if((x.getSymbol().toLowerCase().equals("b") && x.getRow() == 0) || (x.getSymbol().toLowerCase().equals("r") && x.getRow() == size - 1)){
+				x.upgrade();
+			}
+		}
+	}
 
 	public boolean isEmpty(int col, int row) {
 			if (board[row][col] == null) {
