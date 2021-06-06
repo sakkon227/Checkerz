@@ -43,6 +43,28 @@ public class CheckerBoard{
 		}
 	}
 
+	public boolean isGameOver(){
+		int bcounter = 0;
+		int rcounter = 0;
+		for(Piece x : allPieces){
+			if(bcounter > 0 && rcounter > 0){
+				return false;
+			}
+			if(x.getSymbol().toLowerCase().equals("r")){
+				rcounter++;
+			} else if(x.getSymbol().toLowerCase().equals("b")){
+				bcounter++;
+			}
+		}
+		if(bcounter == 0){
+			System.out.println("Player R Wins! GG get better Player B!");
+			return true;
+		} else {
+			System.out.println("Player B Wins! GG get better Player R!");
+			return true;
+		}
+	}
+
 	public void updateBoard(){
 		for(int i = 0; i < board.length; i++){
 			for(int j = 0; j < board[0].length; j++){
@@ -131,12 +153,12 @@ public class CheckerBoard{
 			}
 		}
 		if (P && a.getSymbol().toLowerCase().equals("b")){
-			System.out.println("allowed");
+			System.out.println("access to piece granted");
 			return true;
 		} else if (!P && a.getSymbol().toLowerCase().equals("r")){
 			return true;
 		} else {
-			System.out.println("Pick a valid piece.");
+			System.out.println("Nuh uh no cheating! Pick your own piece to move.\n");
 			return false;
 		}
 	}
@@ -328,6 +350,5 @@ public class CheckerBoard{
 			System.out.println("This piece cannot move in this direction.");
 			return false; 
 		}
-	}
-	
+	}	
 }
