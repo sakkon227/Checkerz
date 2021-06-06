@@ -2,6 +2,8 @@
 import java.util.*;
 public class CheckerBoardClient{
 	public static int stopper = 3; 
+
+	public static boolean isPlayerB = false; 
 	public static void main(String[] args){
 		System.out.println("Welcome to our checkers game! "); 
 		Scanner console = new Scanner(System.in);
@@ -12,34 +14,67 @@ public class CheckerBoardClient{
 			a.setSize(8);
 			a.updateBoard();
 			System.out.println(a);
-			System.out.println("type \"000\" to terminate at any time."); 
+			System.out.println("type \"666 666 stop stop\" to terminate at any time."); 
 		} 
-		// while (! (stopper == 0 )) {
-		// System.out.println("What would you like to move? Use this grid like a coordiate plane. "); 
-		// int b = console.nextInt(); 
-		// int c = console.nextInt(); 
-		// checkForTerminating(b); 
-		// checkForTerminating(c); 
-		// need to add in options, type in R for right, L for left, U for up, etc. 
+		while (stopper != 666 ) {
+			isPlayerB = !isPlayerB; 
+			System.out.println("What would you like to move? Use this grid like a coordiate plane ");
+			System.out.println("and use U / D for up or down, and R / L for right or left. ");  
+			if (isPlayerB == true) {
+				System.out.println("It's player B's turn");
+			}else {
+				System.out.println("It's player R's turn"); 
+			}
+			int b = console.nextInt(); // col
+			int c = console.nextInt(); // row 
+			String aa = console.next(); 
+			String bb = console.next();
 
-		// our next area of improvement is to add in a way to differentiate r's turn and b's turn. 
-		// also, we need a bunch of if statements to check if the movement is allowed. I've gotten started in the CheckerBoard class. 
-		a.moveUpLeft(1,3);
-		a.updateBoard();
-		System.out.println(a);
-		a.moveUpRight(3,3);
-		a.updateBoard();
-		System.out.println(a);
-		a.moveDownRight(1,3);
-		a.updateBoard();
-		System.out.println(a);
-		//}
+			if (b == 666 || c == 666 || aa.equals("stop") || bb.equals("stop")) {
+				stopper = 666; 
+				break; 
+			} 
 
-	}
+			if ((aa.equals("U") || aa.equals("D")) && (bb.equals("R") || bb.equals("L"))) {
+				if (a.isMoveAllowed(isPlayerB, b, c) == true) { 
 
-	public static void checkForTerminating(int b) {
-		if (b == 000) {
-			stopper = 0;
-		} 
+					if (aa.equals("U") && bb.equals("R")) {
+						if (!(a.moveUpRight(b,c, isPlayerB))) {
+							isPlayerB = !isPlayerB; 
+						} 
+						a.updateBoard();
+						a.promote(); 
+						System.out.println(a); 
+					}else if (aa.equals("D") && bb.equals("R")) {
+						if (!(a.moveDownRight(b,c, isPlayerB))) {
+							isPlayerB = !isPlayerB; 
+						}
+						a.updateBoard();
+						a.promote(); 
+						System.out.println(a); 
+					}else if (aa.equals("U") && bb.equals("L")) {
+						if (!(a.moveUpLeft(b,c, isPlayerB))) {
+							isPlayerB = !isPlayerB; 
+						} 
+						a.updateBoard();
+						a.promote(); 
+						System.out.println(a); 
+					}else if (aa.equals("D") && bb.equals("L")) {
+						if (!(a.moveDownLeft(b,c, isPlayerB))) {
+							isPlayerB = !isPlayerB;
+						}  
+						a.updateBoard();
+						a.promote();  
+						System.out.println(a);
+					}
+				}else {
+					isPlayerB = !isPlayerB; 
+				}
+			}else {
+				System.out.println("Move not allowed. Try again"); 
+					isPlayerB = !isPlayerB; 
+				
+			}
+		}
 	}
 }
